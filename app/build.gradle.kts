@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.kotlin.serialization)
     kotlin("kapt")
 }
 
@@ -70,6 +71,13 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigationCompose)
     kapt(libs.hilt.android.compiler)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.kotlinx.serialization.converter)
+
+    // Kotlin Serialization
+    implementation(libs.kotlin.serialization)
 
     testImplementation(libs.junit)
 
