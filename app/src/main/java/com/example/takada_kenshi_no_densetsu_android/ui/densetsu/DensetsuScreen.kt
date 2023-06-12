@@ -1,6 +1,8 @@
 package com.example.takada_kenshi_no_densetsu_android.ui.densetsu
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
@@ -30,8 +34,12 @@ fun DensetsuScreen(
     densetsuViewModel: DensetsuViewModel = hiltViewModel()
 ) {
     val densetsuState by densetsuViewModel.densetsuState.collectAsState()
+    val scrollState = rememberScrollState()
 
-    DensetsuContent(densetsuState = densetsuState) {
+    DensetsuContent(
+        densetsuState = densetsuState,
+        scrollState = scrollState
+        ) {
         densetsuViewModel.getDensetsu()
     }
 }
@@ -39,10 +47,13 @@ fun DensetsuScreen(
 @Composable
 fun DensetsuContent(
     densetsuState: DensetsuState,
+    scrollState: ScrollState,
     onClick: () -> Unit
 ) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(scrollState),
         contentAlignment = Alignment.TopCenter
     ) {
         Column(
@@ -72,6 +83,7 @@ fun DensetsuContent(
             Button(onClick = onClick) {
                 Text(text = "伝説を探す")
             }
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
