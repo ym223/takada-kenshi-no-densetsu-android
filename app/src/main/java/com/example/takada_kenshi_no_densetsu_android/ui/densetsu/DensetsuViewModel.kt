@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.takada_kenshi_no_densetsu_android.data.Densetsu
 import com.example.takada_kenshi_no_densetsu_android.data.service.DensetsuRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -20,13 +21,13 @@ class DensetsuViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _densetsuState = MutableStateFlow<DensetsuState>(DensetsuState.Nothing)
-
     val densetsuState = _densetsuState.asStateFlow()
 
     fun getDensetsu() {
         viewModelScope.launch {
             runCatching {
                 _densetsuState.value = DensetsuState.Loading
+                delay(500)
                 densetsuRepository.getDensetsu()
             }.onSuccess {
                 _densetsuState.value = DensetsuState.Success(it)
