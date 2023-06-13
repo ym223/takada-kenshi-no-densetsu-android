@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.takada_kenshi_no_densetsu_android.R
+import com.example.takada_kenshi_no_densetsu_android.data.Densetsu
 
 @Composable
 fun DensetsuScreen(
@@ -38,17 +39,18 @@ fun DensetsuScreen(
 
     DensetsuContent(
         densetsuState = densetsuState,
-        scrollState = scrollState
-        ) {
-        densetsuViewModel.getDensetsu()
-    }
+        scrollState = scrollState,
+        onClick = { densetsuViewModel.getDensetsu() },
+        update = densetsuViewModel::updateDensetsu
+    )
 }
 
 @Composable
 fun DensetsuContent(
     densetsuState: DensetsuState,
     scrollState: ScrollState,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    update: (Densetsu) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -67,8 +69,10 @@ fun DensetsuContent(
             when (densetsuState) {
                 is DensetsuState.Success -> {
                     SuccessView(
+                        densetsuState.densetsu.isNew,
                         densetsuState.densetsu.text
                     )
+                    update(densetsuState.densetsu)
                     Spacer(modifier = Modifier.height(16.dp))
                 }
 
@@ -90,6 +94,7 @@ fun DensetsuContent(
 
 @Composable
 fun SuccessView(
+    isNew: Boolean,
     text: String
 ) {
     Box(
@@ -97,7 +102,12 @@ fun SuccessView(
             .fillMaxWidth()
             .padding(horizontal = 24.dp)
     ) {
-        Text(text = text)
+        Column {
+            if (isNew) {
+                Text(text = "New")
+            }
+            Text(text = text)
+        }
     }
 }
 

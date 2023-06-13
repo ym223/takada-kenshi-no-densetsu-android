@@ -79,6 +79,10 @@ dependencies {
     // Kotlin Serialization
     implementation(libs.kotlin.serialization)
 
+    // Room
+    implementation(libs.room)
+    kapt(libs.room.compiler)
+
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.test.ext.junit)

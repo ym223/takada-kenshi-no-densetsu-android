@@ -36,12 +36,3 @@ class NetworkModule {
     @Provides
     fun DensetsuApi(retrofit: Retrofit) = retrofit.create(DensetsuApi::class.java)
 }
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class DensetsuRepositoryBindModule {
-
-    @Singleton
-    @Binds
-    abstract fun densetsuRepository(densetsuRepositoryImpl: DensetsuRepositoryImpl): DensetsuRepository
-}
