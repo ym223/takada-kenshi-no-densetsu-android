@@ -20,10 +20,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun Home(
-    soundPlayer: SoundPlayer
+    stop: () -> Unit
 ) {
     HomeCategoryTabs(
-        soundPlayer = soundPlayer
+        stop = stop
     )
 }
 
@@ -31,7 +31,7 @@ fun Home(
 @Composable
 private fun HomeCategoryTabs(
     modifier: Modifier = Modifier,
-    soundPlayer: SoundPlayer
+    stop: () -> Unit
 ) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
@@ -58,7 +58,7 @@ private fun HomeCategoryTabs(
                 when (it) {
                     0 -> {
                         DensetsuScreen()
-                        soundPlayer.stop()
+                        stop()
                     }
 
                     1 -> DensetsuListScreen()
