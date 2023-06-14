@@ -1,4 +1,4 @@
-package com.example.takada_kenshi_no_densetsu_android.data.service
+package com.example.takada_kenshi_no_densetsu_android.data.service.densetsu
 
 import com.example.takada_kenshi_no_densetsu_android.data.Densetsu
 import retrofit2.http.GET

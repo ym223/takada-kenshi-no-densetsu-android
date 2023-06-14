@@ -1,7 +1,7 @@
 package com.example.takada_kenshi_no_densetsu_android.data.di
 
-import com.example.takada_kenshi_no_densetsu_android.data.service.DensetsuRepository
-import com.example.takada_kenshi_no_densetsu_android.data.service.DensetsuRepositoryImpl
+import com.example.takada_kenshi_no_densetsu_android.data.service.densetsu.DensetsuRepository
+import com.example.takada_kenshi_no_densetsu_android.data.service.densetsu.DensetsuRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

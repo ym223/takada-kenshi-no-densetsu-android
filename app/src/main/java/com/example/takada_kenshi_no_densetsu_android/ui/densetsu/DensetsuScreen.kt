@@ -2,19 +2,26 @@ package com.example.takada_kenshi_no_densetsu_android.ui.densetsu
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -41,7 +49,8 @@ fun DensetsuScreen(
         densetsuState = densetsuState,
         scrollState = scrollState,
         onClick = { densetsuViewModel.getDensetsu() },
-        update = densetsuViewModel::updateDensetsu
+        update = densetsuViewModel::updateDensetsu,
+        playSound = densetsuViewModel::playDensetsu
     )
 }
 
@@ -50,7 +59,8 @@ fun DensetsuContent(
     densetsuState: DensetsuState,
     scrollState: ScrollState,
     onClick: () -> Unit,
-    update: (Densetsu) -> Unit
+    update: (Densetsu) -> Unit,
+    playSound: (Int) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -69,8 +79,12 @@ fun DensetsuContent(
             when (densetsuState) {
                 is DensetsuState.Success -> {
                     SuccessView(
-                        densetsuState.densetsu.isNew,
-                        densetsuState.densetsu.text
+                        isNew = densetsuState.densetsu.isNew,
+                        no = densetsuState.densetsu.no,
+                        text = densetsuState.densetsu.text,
+                        onClick = {
+                            playSound(densetsuState.densetsu.no)
+                        }
                     )
                     update(densetsuState.densetsu)
                     Spacer(modifier = Modifier.height(16.dp))
@@ -95,7 +109,9 @@ fun DensetsuContent(
 @Composable
 fun SuccessView(
     isNew: Boolean,
-    text: String
+    no: Int,
+    text: String,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -103,8 +119,24 @@ fun SuccessView(
             .padding(horizontal = 24.dp)
     ) {
         Column {
-            if (isNew) {
-                Text(text = "New")
+            Row(
+                modifier = Modifier
+                    .defaultMinSize(minHeight = 40.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if ((no > 0) && (no < 81)) {
+                    IconButton(onClick = onClick) {
+                        Icon(imageVector = Icons.Filled.VolumeUp, contentDescription = "read aloud")
+                    }
+                } else {
+                    Spacer(modifier = Modifier.size(0.dp))
+                }
+
+                if (isNew) {
+                    Text(text = "New!!", color = Color.Red)
+                }
             }
             Text(text = text)
         }

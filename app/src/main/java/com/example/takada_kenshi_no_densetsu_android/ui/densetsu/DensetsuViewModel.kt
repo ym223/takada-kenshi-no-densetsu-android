@@ -4,7 +4,8 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.takada_kenshi_no_densetsu_android.data.Densetsu
-import com.example.takada_kenshi_no_densetsu_android.data.service.DensetsuRepository
+import com.example.takada_kenshi_no_densetsu_android.data.service.densetsu.DensetsuRepository
+import com.example.takada_kenshi_no_densetsu_android.data.service.sound.SoundPlayer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
@@ -16,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DensetsuViewModel @Inject constructor(
-    private val densetsuRepository: DensetsuRepository
+    private val densetsuRepository: DensetsuRepository,
+    private val soundPlayer: SoundPlayer
 ) : ViewModel() {
 
     private var _densetsuState = MutableStateFlow<DensetsuState>(DensetsuState.Nothing)
@@ -44,6 +46,10 @@ class DensetsuViewModel @Inject constructor(
         viewModelScope.launch(IO) {
             densetsuRepository.updateDensetsu(densetsu.copy(isNew = false))
         }
+    }
+
+    fun playDensetsu(id: Int){
+        soundPlayer.play(id)
     }
 }
 

@@ -1,5 +1,5 @@
 [versions]
-agp = "8.2.0-alpha07"
+agp = "8.2.0-alpha08"
 kotlin = "1.8.10"
 core-ktx = "1.10.1"
 junit = "4.13.2"
@@ -15,6 +15,8 @@ retrofit-kotlinx-serialization-converter = "1.0.0"
 kotlin-serialization-plugin = "1.8.10"
 kotlin-serialization-json = "1.5.0"
 room = "2.5.1"
+exoplayer = "1.0.2"
+icon = "1.4.3"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -39,6 +41,9 @@ retrofit-kotlinx-serialization-converter = { group = "com.jakewharton.retrofit",
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlin-serialization-json" }
 room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "exoplayer" }
+exoplayer-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
+icon = {group = "androidx.compose.material", name = "material-icons-extended", version.ref = "icon"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
