@@ -1,11 +1,8 @@
 package com.example.takada_kenshi_no_densetsu_android.data.di
 
 import com.example.takada_kenshi_no_densetsu_android.data.Param.Companion.BASE_URL
-import com.example.takada_kenshi_no_densetsu_android.data.service.DensetsuApi
-import com.example.takada_kenshi_no_densetsu_android.data.service.DensetsuRepository
-import com.example.takada_kenshi_no_densetsu_android.data.service.DensetsuRepositoryImpl
+import com.example.takada_kenshi_no_densetsu_android.data.service.densetsu.DensetsuApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -83,6 +83,10 @@ dependencies {
     implementation(libs.room)
     kapt(libs.room.compiler)
 
+    // ExoPlayer
+    implementation(libs.exoplayer)
+    implementation(libs.exoplayer.ui)
+
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.test.ext.junit)

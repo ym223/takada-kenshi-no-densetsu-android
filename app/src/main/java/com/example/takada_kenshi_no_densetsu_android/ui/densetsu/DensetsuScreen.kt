@@ -41,7 +41,8 @@ fun DensetsuScreen(
         densetsuState = densetsuState,
         scrollState = scrollState,
         onClick = { densetsuViewModel.getDensetsu() },
-        update = densetsuViewModel::updateDensetsu
+        update = densetsuViewModel::updateDensetsu,
+        playSound = densetsuViewModel::playDensetsu
     )
 }
 
@@ -50,7 +51,8 @@ fun DensetsuContent(
     densetsuState: DensetsuState,
     scrollState: ScrollState,
     onClick: () -> Unit,
-    update: (Densetsu) -> Unit
+    update: (Densetsu) -> Unit,
+    playSound: (Int) -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -72,6 +74,7 @@ fun DensetsuContent(
                         densetsuState.densetsu.isNew,
                         densetsuState.densetsu.text
                     )
+                    playSound(densetsuState.densetsu.no)
                     update(densetsuState.densetsu)
                     Spacer(modifier = Modifier.height(16.dp))
                 }
