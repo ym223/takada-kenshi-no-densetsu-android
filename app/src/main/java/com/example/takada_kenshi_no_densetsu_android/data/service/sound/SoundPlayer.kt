@@ -10,13 +10,14 @@ import javax.inject.Inject
 interface SoundPlayer {
     fun play(id: Int)
     fun stop()
+    fun release()
 }
 
 @UnstableApi
 class SoundPlayerImpl @Inject constructor(private val exoPlayer: ExoPlayer) : SoundPlayer {
 
     override fun play(id: Int) {
-        if ((id > 80) || (id < 1)) return
+        if ((id > 81) || (id < 1)) return
         exoPlayer.setMediaItem(mediaList[id - 1])
         exoPlayer.prepare()
         exoPlayer.play()
@@ -24,6 +25,10 @@ class SoundPlayerImpl @Inject constructor(private val exoPlayer: ExoPlayer) : So
 
     override fun stop() {
         exoPlayer.stop()
+    }
+
+    override fun release() {
+        exoPlayer.release()
     }
 
     private val mediaList: List<MediaItem> = listOf(

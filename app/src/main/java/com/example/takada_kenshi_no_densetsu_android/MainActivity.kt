@@ -35,20 +35,14 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    override fun onPause() {
+        super.onPause()
+        player.stop()
+    }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TakadakenshinodensetsuandroidTheme {
-        Greeting("Android")
+    override fun onDestroy() {
+        super.onDestroy()
+        player.release()
     }
 }
