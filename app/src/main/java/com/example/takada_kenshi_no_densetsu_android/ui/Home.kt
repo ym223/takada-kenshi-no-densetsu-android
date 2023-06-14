@@ -13,19 +13,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import com.example.takada_kenshi_no_densetsu_android.data.service.sound.SoundPlayer
 import com.example.takada_kenshi_no_densetsu_android.ui.densetsu.DensetsuScreen
 import com.example.takada_kenshi_no_densetsu_android.ui.densetsuList.DensetsuListScreen
 import kotlinx.coroutines.launch
 
 @Composable
-fun Home() {
-    HomeCategoryTabs()
+fun Home(
+    soundPlayer: SoundPlayer
+) {
+    HomeCategoryTabs(
+        soundPlayer = soundPlayer
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HomeCategoryTabs(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    soundPlayer: SoundPlayer
 ) {
     val pagerState = rememberPagerState()
     val coroutineScope = rememberCoroutineScope()
@@ -50,7 +56,11 @@ private fun HomeCategoryTabs(
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 when (it) {
-                    0 -> DensetsuScreen()
+                    0 -> {
+                        DensetsuScreen()
+                        soundPlayer.stop()
+                    }
+
                     1 -> DensetsuListScreen()
                 }
             }

@@ -87,6 +87,9 @@ dependencies {
     implementation(libs.exoplayer)
     implementation(libs.exoplayer.ui)
 
+    // MaterialIcon
+    implementation(libs.icon)
+
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.test.ext.junit)

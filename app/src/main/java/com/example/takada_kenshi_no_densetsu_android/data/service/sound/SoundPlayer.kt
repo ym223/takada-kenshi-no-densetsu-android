@@ -1,6 +1,5 @@
 package com.example.takada_kenshi_no_densetsu_android.data.service.sound
 
-import android.util.Log
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.RawResourceDataSource

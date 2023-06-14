@@ -16,6 +16,7 @@ kotlin-serialization-plugin = "1.8.10"
 kotlin-serialization-json = "1.5.0"
 room = "2.5.1"
 exoplayer = "1.0.2"
+icon = "1.4.3"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -42,6 +43,7 @@ room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "exoplayer" }
 exoplayer-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
+icon = {group = "androidx.compose.material", name = "material-icons-extended", version.ref = "icon"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
