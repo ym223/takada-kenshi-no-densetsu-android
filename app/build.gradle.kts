@@ -90,6 +90,9 @@ dependencies {
     // MaterialIcon
     implementation(libs.icon)
 
+    // ScrollBar
+    implementation(libs.scrollbar)
+
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.test.ext.junit)
