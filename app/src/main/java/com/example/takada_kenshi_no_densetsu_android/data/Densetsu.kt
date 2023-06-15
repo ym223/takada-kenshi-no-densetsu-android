@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 @Entity(tableName = "densetsu_table")
 data class Densetsu(
     @SerialName("No")
-    @PrimaryKey val no: Int,
+    @PrimaryKey var no: Int,
     val text: String,
     val isNew: Boolean = true
 )

@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.example.takada_kenshi_no_densetsu_android.data.service.sound.SoundPlayer
 import com.example.takada_kenshi_no_densetsu_android.ui.densetsu.DensetsuScreen
 import com.example.takada_kenshi_no_densetsu_android.ui.densetsuList.DensetsuListScreen
 import kotlinx.coroutines.launch
@@ -61,7 +60,10 @@ private fun HomeCategoryTabs(
                         stop()
                     }
 
-                    1 -> DensetsuListScreen()
+                    1 -> {
+                        DensetsuListScreen()
+                        stop()
+                    }
                 }
             }
         }
