@@ -10,6 +10,9 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -26,7 +29,9 @@ class DensetsuListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             withContext(IO) {
-                _densetsuList.value = densetsuRepository.getDensetsuList()
+                densetsuRepository.getDensetsuList().collect {
+                    _densetsuList.value = it
+                }
             }
         }
     }
