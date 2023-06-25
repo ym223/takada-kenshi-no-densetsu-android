@@ -1,5 +1,9 @@
 package com.example.takada_kenshi_no_densetsu_android.ui.densetsuList
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -19,13 +24,19 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -38,16 +49,74 @@ fun DensetsuListScreen(
     densetsuListViewModel: DensetsuListViewModel = hiltViewModel()
 ) {
     val densetsuListState = densetsuListViewModel.densetsuList.collectAsState()
+    var isShow by rememberSaveable {
+        mutableStateOf(true)
+    }
 
-    DensetsuList(
+    DensetsuContent(
         densetsuList = densetsuListState.value,
+        isShow = isShow,
+        onStateChangedTrue = { isShow = true },
+        onStateChangedFalse = { isShow = false },
         playSound = densetsuListViewModel::play
     )
 }
 
 @Composable
+fun DensetsuContent(
+    densetsuList: List<Densetsu>,
+    isShow: Boolean,
+    onStateChangedTrue: (Boolean) -> Unit,
+    onStateChangedFalse: (Boolean) -> Unit,
+    playSound: (Int) -> Unit
+) {
+    val densetsuListSize = densetsuList.filter { it.text.isNotEmpty() }.size
+    Column {
+        Row(
+            modifier = Modifier
+                .height(36.dp)
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.primaryContainer)
+                .padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row {
+                ChangeListStateText(
+                    text = "全表示",
+                    isShow = isShow,
+                    onStateChanged = onStateChangedTrue
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(text = "|")
+                Spacer(modifier = Modifier.width(4.dp))
+                ChangeListStateText(
+                    text = "取得済み",
+                    isShow = isShow,
+                    onStateChanged = onStateChangedFalse
+                )
+            }
+            Text(text = "$densetsuListSize / 232")
+        }
+        DensetsuList(densetsuList = densetsuList, isShow = isShow, playSound = playSound)
+    }
+}
+
+@Composable
+fun ChangeListStateText(
+    text: String,
+    isShow: Boolean,
+    onStateChanged: (Boolean) -> Unit
+) {
+    Text(text = text, modifier = Modifier.clickable {
+        onStateChanged(isShow)
+    })
+}
+
+@Composable
 fun DensetsuList(
     densetsuList: List<Densetsu>,
+    isShow: Boolean,
     playSound: (Int) -> Unit
 ) {
     val listState = rememberLazyListState()
@@ -58,12 +127,16 @@ fun DensetsuList(
     ) {
         LazyColumn(
             state = listState,
-            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+            contentPadding = PaddingValues(horizontal = 8.dp),
         ) {
             items(densetsuList) {
-                DensetsuListItem(no = it.no, text = it.text) {
-                    playSound(it.no)
+                AnimatedVisibility(visible = isShow || it.text.isNotEmpty()) {
+                    Column {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        DensetsuListItem(no = it.no, text = it.text) {
+                            playSound(it.no)
+                        }
+                    }
                 }
             }
         }
@@ -98,6 +171,19 @@ fun DensetsuListItem(
             ) {
                 Text(text = "Densetsu No.%d".format(no))
                 VoiceIcon(no = no, text = text, onClick = onClick)
+            }
+            Canvas(modifier = Modifier.fillMaxWidth()) {
+                drawRoundRect(
+                    color = Color.Gray,
+                    cornerRadius = CornerRadius(1f),
+                    style = Stroke(
+                        width = 1f,
+                        pathEffect = PathEffect.dashPathEffect(
+                            intervals = floatArrayOf(5f, 10f),
+                            phase = 5f + 10f,
+                        )
+                    )
+                )
             }
             Spacer(modifier = Modifier.height(10.dp))
             DensetsuText(text = text)
