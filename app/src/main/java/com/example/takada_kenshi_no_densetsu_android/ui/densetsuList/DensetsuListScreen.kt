@@ -169,9 +169,6 @@ fun DensetsuListItem(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
         elevation = CardDefaults.elevatedCardElevation(
             defaultElevation = 4.dp
         )
