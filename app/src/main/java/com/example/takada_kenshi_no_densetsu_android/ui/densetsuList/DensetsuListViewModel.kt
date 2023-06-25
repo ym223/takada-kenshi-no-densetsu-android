@@ -8,7 +8,11 @@ import com.example.takada_kenshi_no_densetsu_android.data.service.sound.SoundPla
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -22,25 +26,14 @@ class DensetsuListViewModel @Inject constructor(
     private var _densetsuList = MutableStateFlow<List<Densetsu>>(listOf())
     val densetsuList = _densetsuList.asStateFlow()
 
-    suspend fun getDensetsuList() {
-        val densetsuListAll = MutableList(232) { Densetsu(no = -1, text = "", isNew = false) }
-
-        for (i in 0..231) {
-            densetsuListAll[i].no = i
-        }
-
+    init {
         viewModelScope.launch {
             withContext(IO) {
-                _densetsuList.value = densetsuRepository.getDensetsuAll()
-            }
-        }.join()
-
-        _densetsuList.value.let {
-            for (densetsu in it) {
-                densetsuListAll[densetsu.no] = densetsu
+                densetsuRepository.getDensetsuList().collect {
+                    _densetsuList.value = it
+                }
             }
         }
-        _densetsuList.value = densetsuListAll
     }
 
     fun play(no: Int) {
