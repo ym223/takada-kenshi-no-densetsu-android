@@ -1,6 +1,10 @@
 package com.example.takada_kenshi_no_densetsu_android.ui.densetsuList
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -131,7 +135,11 @@ fun DensetsuList(
             contentPadding = PaddingValues(horizontal = 8.dp),
         ) {
             items(densetsuList) {
-                AnimatedVisibility(visible = isShow || it.text.isNotEmpty()) {
+                AnimatedVisibility(
+                    visible = isShow || it.text.isNotEmpty(),
+                    enter = fadeIn() + expandVertically(),
+                    exit = fadeOut() + shrinkVertically()
+                    ) {
                     Column {
                         Spacer(modifier = Modifier.height(16.dp))
                         DensetsuListItem(no = it.no, text = it.text) {
@@ -161,9 +169,6 @@ fun DensetsuListItem(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        ),
         elevation = CardDefaults.elevatedCardElevation(
             defaultElevation = 4.dp
         )
