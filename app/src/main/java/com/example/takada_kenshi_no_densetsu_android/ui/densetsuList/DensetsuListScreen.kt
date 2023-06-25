@@ -37,6 +37,7 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -139,6 +140,9 @@ fun DensetsuList(
                     }
                 }
             }
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
     }
 }
@@ -149,6 +153,11 @@ fun DensetsuListItem(
     text: String,
     onClick: () -> Unit
 ) {
+    // 点の横幅っぽい
+    val onInterval = 5f
+    // 点の感覚っぽい
+    val offInterval = 10f
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
@@ -169,7 +178,7 @@ fun DensetsuListItem(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Densetsu No.%d".format(no))
+                Text(text = "No.%d".format(no), fontWeight = FontWeight.Bold)
                 VoiceIcon(no = no, text = text, onClick = onClick)
             }
             Canvas(modifier = Modifier.fillMaxWidth()) {
@@ -179,8 +188,8 @@ fun DensetsuListItem(
                     style = Stroke(
                         width = 1f,
                         pathEffect = PathEffect.dashPathEffect(
-                            intervals = floatArrayOf(5f, 10f),
-                            phase = 5f + 10f,
+                            intervals = floatArrayOf(onInterval, offInterval),
+                            phase = onInterval + offInterval,
                         )
                     )
                 )
