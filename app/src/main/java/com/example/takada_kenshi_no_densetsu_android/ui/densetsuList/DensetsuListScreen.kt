@@ -15,16 +15,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -54,7 +55,7 @@ fun DensetsuList(
         listState = listState,
         thumbColor = MaterialTheme.colorScheme.tertiary,
         thumbSelectedColor = MaterialTheme.colorScheme.tertiaryContainer
-        ) {
+    ) {
         LazyColumn(
             state = listState,
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 16.dp),
@@ -77,27 +78,29 @@ fun DensetsuListItem(
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp)
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        elevation = CardDefaults.elevatedCardElevation(
+            defaultElevation = 4.dp
+        )
     ) {
-        Column {
-            Surface(
+        Column(
+            modifier = Modifier.padding(horizontal = 16.dp)
+        ) {
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                color = MaterialTheme.colorScheme.surfaceTint
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(text = "Densetsu No.%d".format(no))
-                    VoiceIcon(no = no, text = text, onClick = onClick)
-                }
-
+                Text(text = "Densetsu No.%d".format(no))
+                VoiceIcon(no = no, text = text, onClick = onClick)
             }
             Spacer(modifier = Modifier.height(10.dp))
-            DensetsuText(text = text, modifier = Modifier.padding(horizontal = 20.dp))
+            DensetsuText(text = text)
             Spacer(modifier = Modifier.height(20.dp))
         }
     }
