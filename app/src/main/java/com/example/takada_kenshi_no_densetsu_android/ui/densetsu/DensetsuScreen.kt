@@ -1,5 +1,6 @@
 package com.example.takada_kenshi_no_densetsu_android.ui.densetsu
 
+import android.icu.number.Scale
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -56,46 +58,44 @@ fun DensetsuContent(
     update: (Densetsu) -> Unit,
     playSound: (Int) -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.TopCenter
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Spacer(modifier = Modifier.height(16.dp))
+        Box(modifier = Modifier.size(320.dp)){
             Image(
                 painter = painterResource(id = R.drawable.img_takada),
                 contentDescription = "Takada_face",
-                modifier = Modifier.scale(0.8f)
+                contentScale = ContentScale.Fit
             )
-            when (densetsuState) {
-                is DensetsuState.Success -> {
-                    SuccessView(
-                        isNew = densetsuState.densetsu.isNew,
-                        no = densetsuState.densetsu.no,
-                        text = densetsuState.densetsu.text,
-                        onClick = {
-                            playSound(densetsuState.densetsu.no)
-                        }
-                    )
-                    update(densetsuState.densetsu)
-                    Spacer(modifier = Modifier.height(16.dp))
-                }
-
-                DensetsuState.Loading -> {
-                    LoadingView()
-                }
-
-                else -> {
-
-                }
-            }
-            Button(onClick = onClick) {
-                Text(text = "伝説を探す")
-            }
-            Spacer(modifier = Modifier.height(16.dp))
         }
+        when (densetsuState) {
+            is DensetsuState.Success -> {
+                SuccessView(
+                    isNew = densetsuState.densetsu.isNew,
+                    no = densetsuState.densetsu.no,
+                    text = densetsuState.densetsu.text,
+                    onClick = {
+                        playSound(densetsuState.densetsu.no)
+                    }
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            DensetsuState.Loading -> {
+                LoadingView()
+            }
+
+            else -> {
+
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = onClick) {
+            Text(text = "伝説を探す")
+        }
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
