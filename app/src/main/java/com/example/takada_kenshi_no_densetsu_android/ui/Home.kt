@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun Home(
+    playSound: (Int) -> Unit,
     stop: () -> Unit
 ) {
     Scaffold(
@@ -38,6 +39,7 @@ fun Home(
     ) {
         Box(modifier = Modifier.padding(it)) {
             HomeCategoryTabs(
+                playSound = playSound,
                 stop = stop
             )
         }
@@ -73,6 +75,7 @@ fun DensetsuTopAppBar() {
 @Composable
 fun HomeCategoryTabs(
     modifier: Modifier = Modifier,
+    playSound:(Int) -> Unit,
     stop: () -> Unit
 ) {
     val pagerState = rememberPagerState()
@@ -99,12 +102,12 @@ fun HomeCategoryTabs(
             Box(modifier = Modifier.fillMaxSize()) {
                 when (it) {
                     0 -> {
-                        DensetsuScreen()
+                        DensetsuScreen(playSound = playSound)
                         stop()
                     }
 
                     1 -> {
-                        DensetsuListScreen()
+                        DensetsuListScreen(playSound = playSound)
                         stop()
                     }
                 }

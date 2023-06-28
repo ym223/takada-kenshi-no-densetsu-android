@@ -51,7 +51,8 @@ import my.nanihadesuka.compose.LazyColumnScrollbar
 
 @Composable
 fun DensetsuListScreen(
-    densetsuListViewModel: DensetsuListViewModel = hiltViewModel()
+    densetsuListViewModel: DensetsuListViewModel = hiltViewModel(),
+    playSound: (Int) -> Unit
 ) {
     val densetsuListState = densetsuListViewModel.densetsuList.collectAsState()
     var isShow by rememberSaveable {
@@ -63,7 +64,7 @@ fun DensetsuListScreen(
         isShow = isShow,
         onStateChangedTrue = { isShow = true },
         onStateChangedFalse = { isShow = false },
-        playSound = densetsuListViewModel::play
+        playSound = playSound
     )
 }
 

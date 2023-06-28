@@ -29,7 +29,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Home(stop = { soundPlayer.stop() })
+                    Home(
+                        playSound = soundPlayer::play,
+                        stop = { soundPlayer.stop() }
+                    )
                 }
             }
         }
