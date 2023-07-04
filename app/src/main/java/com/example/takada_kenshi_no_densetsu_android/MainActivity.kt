@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
 import com.example.compose.TakadaKenshiAppTheme
 import com.example.takada_kenshi_no_densetsu_android.data.service.sound.SoundPlayer
 import com.example.takada_kenshi_no_densetsu_android.ui.Home
