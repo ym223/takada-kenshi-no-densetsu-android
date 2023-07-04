@@ -18,7 +18,6 @@ import javax.inject.Inject
 @HiltViewModel
 class DensetsuViewModel @Inject constructor(
     private val densetsuRepository: DensetsuRepository,
-    private val soundPlayer: SoundPlayer
 ) : ViewModel() {
 
     private var _densetsuState = MutableStateFlow<DensetsuState>(DensetsuState.Nothing)
@@ -46,10 +45,6 @@ class DensetsuViewModel @Inject constructor(
         viewModelScope.launch(IO) {
             densetsuRepository.updateDensetsu(densetsu.copy(isNew = false))
         }
-    }
-
-    fun playDensetsu(id: Int){
-        soundPlayer.play(id)
     }
 }
 

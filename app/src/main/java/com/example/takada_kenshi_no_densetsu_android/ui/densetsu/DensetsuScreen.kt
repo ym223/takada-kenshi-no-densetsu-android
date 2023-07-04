@@ -36,7 +36,8 @@ import com.example.takada_kenshi_no_densetsu_android.data.Densetsu
 
 @Composable
 fun DensetsuScreen(
-    densetsuViewModel: DensetsuViewModel = hiltViewModel()
+    densetsuViewModel: DensetsuViewModel = hiltViewModel(),
+    playSound: (Int) -> Unit
 ) {
     val densetsuState by densetsuViewModel.densetsuState.collectAsState()
 
@@ -44,7 +45,7 @@ fun DensetsuScreen(
         densetsuState = densetsuState,
         onClick = { densetsuViewModel.getDensetsu() },
         update = densetsuViewModel::updateDensetsu,
-        playSound = densetsuViewModel::playDensetsu
+        playSound = playSound
     )
 }
 
