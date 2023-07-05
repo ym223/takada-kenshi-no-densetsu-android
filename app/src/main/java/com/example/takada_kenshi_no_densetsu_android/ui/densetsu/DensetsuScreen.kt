@@ -28,7 +28,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.takada_kenshi_no_densetsu_android.R
@@ -118,14 +120,14 @@ fun SuccessView(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if ((no > 0) && (no < 81)) {
-                    IconButton(onClick = onClick) {
-                        Icon(imageVector = Icons.Filled.VolumeUp, contentDescription = "read aloud")
+                Row(verticalAlignment = Alignment.CenterVertically){
+                    Text(text = "No.%d".format(no), fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                    if ((no > 0) && (no < 81)) {
+                        IconButton(onClick = onClick) {
+                            Icon(imageVector = Icons.Filled.VolumeUp, contentDescription = "read aloud")
+                        }
                     }
-                } else {
-                    Spacer(modifier = Modifier.size(0.dp))
                 }
-
                 if (isNew) {
                     Text(text = "New!!", color = Color.Red)
                 }
