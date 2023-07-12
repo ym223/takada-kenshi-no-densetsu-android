@@ -150,6 +150,8 @@ fun DensetsuList(
                     exit = fadeOut() + shrinkVertically()
                 ) {
                     Column {
+                        // LazyColumnのVerticalArrangement.spacedByで設定すると
+                        // AnimatedVisibilityがfalseのときにも領域が確保されるため、Spacerで設定
                         Spacer(modifier = Modifier.height(16.dp))
                         DensetsuListItem(no = it.no, text = it.text) {
                             playSound(it.no)
@@ -157,6 +159,7 @@ fun DensetsuList(
                     }
                 }
             }
+            // 一番最後のListItemの下にもスペースを確保
             item {
                 Spacer(modifier = Modifier.height(16.dp))
             }
