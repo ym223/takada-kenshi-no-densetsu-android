@@ -39,7 +39,6 @@ class DensetsuViewModel @Inject constructor(
                         DensetsuState.Success(densetsuRepository.getLocalDensetsu(it.no))
                 }
             }.onFailure { it ->
-                Log.d("error", it.toString())
                 _densetsuState.value = DensetsuState.Error
                 _densetsuEvent.update {
                     it + DensetsuEvent.Error

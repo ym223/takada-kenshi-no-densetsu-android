@@ -1,6 +1,7 @@
 package com.example.takada_kenshi_no_densetsu_android.data.service.densetsu
 
 import com.example.takada_kenshi_no_densetsu_android.data.Densetsu
+import com.example.takada_kenshi_no_densetsu_android.data.Param.MAX_DENSETSU
 import com.example.takada_kenshi_no_densetsu_android.data.db.DensetsuDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -36,8 +37,8 @@ class DensetsuRepositoryImpl @Inject constructor(
     }
 
     fun createDensetsuLocalList(): List<Densetsu> {
-        val densetsuAll = MutableList(232) { Densetsu(no = -1, text = "", isNew = false) }
-        for (i in 0..231) {
+        val densetsuAll = MutableList(MAX_DENSETSU) { Densetsu(no = -1, text = "", isNew = false) }
+        for (i in 0 until MAX_DENSETSU) {
             densetsuAll[i].no = i
         }
 

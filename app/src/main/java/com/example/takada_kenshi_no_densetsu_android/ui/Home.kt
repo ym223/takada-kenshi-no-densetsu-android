@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.takada_kenshi_no_densetsu_android.R
 import com.example.takada_kenshi_no_densetsu_android.ui.densetsu.DensetsuScreen
@@ -40,6 +41,7 @@ fun Home(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     Scaffold(
         topBar = { DensetsuTopAppBar() },
@@ -53,7 +55,7 @@ fun Home(
                 showSnackBar = {
                     scope.launch {
                         snackbarHostState.showSnackbar(
-                            message = "ネットワークエラーです。\nインターネット接続を確認してください。",
+                            message = context.getString(R.string.error_message),
                             duration = SnackbarDuration.Short
                         )
                     }
