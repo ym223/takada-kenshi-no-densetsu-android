@@ -16,11 +16,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -34,12 +38,26 @@ fun Home(
     playSound: (Int) -> Unit,
     stop: () -> Unit
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
     Scaffold(
-        topBar = { DensetsuTopAppBar() }
+        topBar = { DensetsuTopAppBar() },
+        snackbarHost = {
+            SnackbarHost(snackbarHostState)
+        }
     ) {
         Box(modifier = Modifier.padding(it)) {
             HomeCategoryTabs(
                 playSound = playSound,
+                showSnackBar = {
+                    scope.launch {
+                        snackbarHostState.showSnackbar(
+                            message = "ネットワークエラーです。\nインターネット接続を確認してください。",
+                            duration = SnackbarDuration.Short
+                        )
+                    }
+                },
                 stop = stop
             )
         }
@@ -75,7 +93,8 @@ fun DensetsuTopAppBar() {
 @Composable
 fun HomeCategoryTabs(
     modifier: Modifier = Modifier,
-    playSound:(Int) -> Unit,
+    showSnackBar: () -> Unit,
+    playSound: (Int) -> Unit,
     stop: () -> Unit
 ) {
     val pagerState = rememberPagerState()
@@ -102,7 +121,10 @@ fun HomeCategoryTabs(
             Box(modifier = Modifier.fillMaxSize()) {
                 when (it) {
                     0 -> {
-                        DensetsuScreen(playSound = playSound)
+                        DensetsuScreen(
+                            showSnackBar = showSnackBar,
+                            playSound = playSound
+                        )
                         stop()
                     }
 
