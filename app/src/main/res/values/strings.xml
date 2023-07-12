@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">高田健志伝説集め</string>
+
+    <string name="find">伝説を探す</string>
+    <string name="densetsu_no">No.%d</string>
+    <string name="new_densetsu">NEW!!</string>
+
+    <string name="show_all">全表示</string>
+    <string name="show_acquired">取得済み</string>
+    <string name="densetsu_count">%d / %d</string>
+    <string name="densetsu_not_found">？？？</string>
+
+    <string name="error_message">ネットワークエラーです。\nインターネット接続を確認してください。</string>
 </resources>

@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -106,7 +107,7 @@ fun DensetsuContent(
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = onClick) {
-                Text(text = "伝説を探す")
+                Text(text = stringResource(id = R.string.find))
             }
             Spacer(modifier = Modifier.height(16.dp))
         }
@@ -135,7 +136,11 @@ fun SuccessView(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = "No.%d".format(no), fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                    Text(
+                        text = stringResource(id = R.string.densetsu_no).format(no),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
                     if ((no > 0) && (no < 81)) {
                         IconButton(onClick = onClick) {
                             Icon(
@@ -146,7 +151,7 @@ fun SuccessView(
                     }
                 }
                 if (isNew) {
-                    Text(text = "New!!", color = Color.Red)
+                    Text(text = stringResource(id = R.string.new_densetsu), color = Color.Red)
                 }
             }
             Text(text = text)
@@ -167,12 +172,5 @@ fun LoadingView() {
                 CircularProgressIndicator()
             }
         }
-    }
-}
-
-@Composable
-fun ErrorView() {
-    Snackbar {
-        Text(text = "Network Error")
     }
 }

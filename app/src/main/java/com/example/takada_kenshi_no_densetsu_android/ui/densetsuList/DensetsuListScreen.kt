@@ -41,12 +41,15 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.takada_kenshi_no_densetsu_android.R
 import com.example.takada_kenshi_no_densetsu_android.data.Densetsu
+import com.example.takada_kenshi_no_densetsu_android.data.service.densetsu.MAX_DENSETSU
 import my.nanihadesuka.compose.LazyColumnScrollbar
 
 @Composable
@@ -76,7 +79,6 @@ fun DensetsuContent(
     onStateChangedFalse: (Boolean) -> Unit,
     playSound: (Int) -> Unit
 ) {
-    val densetsuListSize = densetsuList.filter { it.text.isNotEmpty() }.size
     Column {
         Row(
             modifier = Modifier
@@ -89,7 +91,7 @@ fun DensetsuContent(
         ) {
             Row {
                 ChangeListStateText(
-                    text = "全表示",
+                    text = stringResource(id = R.string.show_all),
                     isShow = isShow,
                     onStateChanged = onStateChangedTrue
                 )
@@ -97,12 +99,18 @@ fun DensetsuContent(
                 Text(text = "|")
                 Spacer(modifier = Modifier.width(4.dp))
                 ChangeListStateText(
-                    text = "取得済み",
+                    text = stringResource(id = R.string.show_acquired),
                     isShow = isShow,
                     onStateChanged = onStateChangedFalse
                 )
             }
-            Text(text = "$densetsuListSize / 232")
+            val densetsuListSize = densetsuList.filter { it.text.isNotEmpty() }.size
+            Text(
+                text = stringResource(id = R.string.densetsu_count).format(
+                    densetsuListSize,
+                    MAX_DENSETSU
+                )
+            )
         }
         DensetsuList(densetsuList = densetsuList, isShow = isShow, playSound = playSound)
     }
@@ -140,7 +148,7 @@ fun DensetsuList(
                     visible = isShow || it.text.isNotEmpty(),
                     enter = fadeIn() + expandVertically(),
                     exit = fadeOut() + shrinkVertically()
-                    ) {
+                ) {
                     Column {
                         Spacer(modifier = Modifier.height(16.dp))
                         DensetsuListItem(no = it.no, text = it.text) {
@@ -162,9 +170,9 @@ fun DensetsuListItem(
     text: String,
     onClick: () -> Unit
 ) {
-    // 点の横幅っぽい
+    // 点の横幅
     val onInterval = 5f
-    // 点の感覚っぽい
+    // 点の感覚
     val offInterval = 10f
 
     Card(
@@ -184,7 +192,10 @@ fun DensetsuListItem(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "No.%d".format(no), fontWeight = FontWeight.Bold)
+                Text(
+                    text = stringResource(id = R.string.densetsu_no).format(no),
+                    fontWeight = FontWeight.Bold
+                )
                 VoiceIcon(no = no, text = text, onClick = onClick)
             }
             Canvas(modifier = Modifier.fillMaxWidth()) {
@@ -226,7 +237,7 @@ fun DensetsuText(
     modifier: Modifier = Modifier,
     text: String
 ) {
-    val densetsuText = text.ifEmpty { "???" }
+    val densetsuText = text.ifEmpty { stringResource(id = R.string.densetsu_not_found) }
     Text(text = densetsuText, modifier = modifier, lineHeight = 1.8.em)
 }
 

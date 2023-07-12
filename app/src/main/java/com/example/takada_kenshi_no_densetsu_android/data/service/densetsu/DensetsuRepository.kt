@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
+const val MAX_DENSETSU = 232
 interface DensetsuRepository {
     suspend fun getDensetsu(): Densetsu
     suspend fun insertDensetsu(densetsu: Densetsu)
@@ -36,8 +37,8 @@ class DensetsuRepositoryImpl @Inject constructor(
     }
 
     fun createDensetsuLocalList(): List<Densetsu> {
-        val densetsuAll = MutableList(232) { Densetsu(no = -1, text = "", isNew = false) }
-        for (i in 0..231) {
+        val densetsuAll = MutableList(MAX_DENSETSU) { Densetsu(no = -1, text = "", isNew = false) }
+        for (i in 0 until MAX_DENSETSU) {
             densetsuAll[i].no = i
         }
 
