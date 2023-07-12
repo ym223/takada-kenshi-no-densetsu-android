@@ -67,5 +67,5 @@ sealed class DensetsuState {
 }
 
 sealed class DensetsuEvent {
-    object Error: DensetsuEvent()
+    object Error : DensetsuEvent()
 }

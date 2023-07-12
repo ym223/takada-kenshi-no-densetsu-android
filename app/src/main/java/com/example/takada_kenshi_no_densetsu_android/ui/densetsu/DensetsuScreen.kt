@@ -69,13 +69,13 @@ fun DensetsuContent(
     update: (Densetsu) -> Unit,
     playSound: (Int) -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize()){
+    Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-            Box(modifier = Modifier.size(320.dp)){
+            Box(modifier = Modifier.size(320.dp)) {
                 Image(
                     painter = painterResource(id = R.drawable.img_takada),
                     contentDescription = "Takada_face",
@@ -134,11 +134,14 @@ fun SuccessView(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically){
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(text = "No.%d".format(no), fontWeight = FontWeight.Bold, fontSize = 20.sp)
                     if ((no > 0) && (no < 81)) {
                         IconButton(onClick = onClick) {
-                            Icon(imageVector = Icons.Filled.VolumeUp, contentDescription = "read aloud")
+                            Icon(
+                                imageVector = Icons.Filled.VolumeUp,
+                                contentDescription = "read aloud"
+                            )
                         }
                     }
                 }
@@ -168,8 +171,8 @@ fun LoadingView() {
 }
 
 @Composable
-fun ErrorView(){
-    Snackbar{
+fun ErrorView() {
+    Snackbar {
         Text(text = "Network Error")
     }
 }
