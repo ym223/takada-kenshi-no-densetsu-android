@@ -49,7 +49,7 @@ import androidx.compose.ui.unit.em
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.takada_kenshi_no_densetsu_android.R
 import com.example.takada_kenshi_no_densetsu_android.data.Densetsu
-import com.example.takada_kenshi_no_densetsu_android.data.service.densetsu.MAX_DENSETSU
+import com.example.takada_kenshi_no_densetsu_android.data.Param.MAX_DENSETSU
 import my.nanihadesuka.compose.LazyColumnScrollbar
 
 @Composable

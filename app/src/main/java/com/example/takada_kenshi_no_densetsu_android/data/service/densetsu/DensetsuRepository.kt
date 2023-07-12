@@ -1,12 +1,12 @@
 package com.example.takada_kenshi_no_densetsu_android.data.service.densetsu
 
 import com.example.takada_kenshi_no_densetsu_android.data.Densetsu
+import com.example.takada_kenshi_no_densetsu_android.data.Param.MAX_DENSETSU
 import com.example.takada_kenshi_no_densetsu_android.data.db.DensetsuDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-const val MAX_DENSETSU = 232
 interface DensetsuRepository {
     suspend fun getDensetsu(): Densetsu
     suspend fun insertDensetsu(densetsu: Densetsu)
